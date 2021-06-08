@@ -1,20 +1,17 @@
 {
-  "name": "h5-dooring",
+  "name": "reactOA",
   "version": "1.3.0",
   "description": "基于umi3+react+dva+antd4.0开发的任务管理系统。",
   "private": false,
   "author": {
-    "name": "徐小夕",
-    "email": "xujiang156@qq.com"
+    "name": "chenwl",
+    "email": "13751840799@163.com"
   },
   "keywords": [
     "react",
     "antd",
     "dva",
     "oa"
-  ],
-  "contributors": [
-    "徐小夕 <xujiang156@qq.com> (https://github.com/MrXujiang))"
   ],
   "scripts": {
     "start": "umi dev",
@@ -47,13 +44,6 @@
       "prettier --parser=typescript --write"
     ]
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/MrXujiang/react-oa.git"
-  },
-  "bugs": {
-    "url": "https://github.com/MrXujiang/h5-Dooring/issues"
-  },
   "dependencies": {
     "@ant-design/icons": "^4.2.1",
     "@antv/f2": "^3.8.1",
@@ -82,7 +72,6 @@
     "umi": "^3.2.19",
     "xlsx": "^0.16.7"
   },
-  "license": "GPL-3.0",
   "devDependencies": {
     "@types/classnames": "^2.2.10",
     "@types/events": "^3.0.0",
