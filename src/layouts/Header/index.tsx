@@ -1,8 +1,9 @@
 import { memo, useState, FC, useCallback, EventHandler } from 'react';
 import { IFormProps, IUserInfo, PageType } from '@/typing';
 import { Link } from 'umi';
-import { Input, Badge, Modal, Form} from 'antd';
+import { Input, Badge, Modal, Form, Radio, Select, DatePicker } from 'antd';
 import moment from 'moment';
+import RichText from '@/components/RichText';
 import classnames from 'classnames';
 import { BellOutlined, PlusOutlined } from '@ant-design/icons';
 import Logo from '@/assets/logo.png';
@@ -14,10 +15,24 @@ interface IProp {
   pageType: PageType;
 }
 
+const options = [
+  { label: '计划', value: 0 },
+  { label: '知识', value: 1 },
+  { label: '便签', value: 2 },
+];
+
+const weightOptions = [
+  { label: '紧急', value: 0 },
+  { label: '重要', value: 1 },
+  { label: '一般', value: 2 },
+  { label: '不重要', value: 3 },
+];
+
+
 const HeaderComponent: FC<IProp> = (props) => {
   const [formType, setFormType] = useState(0);
   const { onFormSubmit, userInfo, pageType } = props;
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(true);
   const [form] = Form.useForm<IFormProps>();
 
   const showEditModal = useCallback(() => setIsModalVisible(true), []);
@@ -32,10 +47,15 @@ const HeaderComponent: FC<IProp> = (props) => {
       values.status = 'undone';
     }
     values.createTime = moment(new Date()).format(dateFormat);
-    onFormSubmit && onFormSubmit(values);
-    setIsModalVisible(false);
+    console.log(`values`, values)
+    // onFormSubmit && onFormSubmit(values);
+    // setIsModalVisible(false);
   };
-  
+
+  const onChange: EventHandler<any> = (e) => {
+    setFormType(e.target.value);
+  };
+
   return (
     <header className="header-wrap">
       <div className="logo">
@@ -88,7 +108,72 @@ const HeaderComponent: FC<IProp> = (props) => {
         onOk={handleOk}
         onCancel={hideEditModal}
         okText="保存"
-      ></Modal>
+      >
+        <Form
+          name="addTask"
+          size="large"
+          form={form}
+          initialValues={{ type: 0 }}
+        >
+          <Form.Item
+            name="type"
+            label="类型"
+            rules={[{ required: true, message: '请选择记录类型' }]}
+          >
+            <Radio.Group
+              options={options}
+              onChange={onChange}
+              optionType="button"
+              buttonStyle="solid"
+            />
+          </Form.Item>
+
+          {formType !== 2 && (
+            <Form.Item
+              name="title"
+              label="标题"
+              rules={[{ required: true, message: '请输入标题' }]}
+            >
+              <Input placeholder="请输入标题" />
+            </Form.Item>
+          )}
+          <Form.Item
+            name="content"
+            label="内容"
+            rules={[{ required: true, message: '请输入内容' }]}
+          >
+            <RichText />
+          </Form.Item>
+          {formType === 0 && (
+            <>
+              <Form.Item
+                name="weight"
+                label="重要性"
+                rules={[{ required: true, message: '请输入计划等级' }]}
+              >
+                <Select options={weightOptions} placeholder="请输入计划等级" />
+              </Form.Item>
+              <div style={{ display: 'flex' }}>
+                <Form.Item
+                  name="startTime"
+                  label="开始时间"
+                  rules={[{ required: true, message: '计划开始时间' }]}
+                >
+                  <DatePicker />
+                </Form.Item>
+                <Form.Item
+                  name="endTime"
+                  label="结束时间"
+                  rules={[{ required: true, message: '计划结束时间' }]}
+                  style={{ marginLeft: '12px' }}
+                >
+                  <DatePicker />
+                </Form.Item>
+              </div>
+            </>
+          )}
+        </Form>
+      </Modal>
     </header>
   );
 };
