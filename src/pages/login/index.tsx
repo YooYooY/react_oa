@@ -13,7 +13,7 @@ const layout = {
 const Login: ConnectRC = ({dispatch}) => {
   const onFinish = (values: IUserInfo) => {
     dispatch({ type: 'global/saveUserInfo', payload: values });
-    // history.push("/manage")
+    history.push("/manage")
   };
   const onFinishFailed = (errorInfo: any)=>{
     console.log(`login failed`, errorInfo);
