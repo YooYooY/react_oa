@@ -1,36 +1,40 @@
-import { Effect, Reducer, Subscription } from 'umi';
+import { Effect, ImmerReducer, Subscription } from 'umi';
 import db from '@/utils/db';
-import { IUserInfo } from '@/typing';
-
-export interface IglobalModelState {
-  userInfo: Partial<IUserInfo>;
-}
+import { IState, IUserInfo } from '@/typing';
 
 export interface IndexModelType {
   namespace: 'global';
-  state: IglobalModelState;
+  state: IState;
   reducers: {
-    saveUserInfo: Reducer<IglobalModelState>;
+    saveForm: ImmerReducer<IState>;
+    saveUserInfo: ImmerReducer<IState>;
   };
-  effects?: {
-    query: Effect;
-  };
-  subscriptions?: { setup: Subscription };
+  effects: {};
+  subscriptions: { setup: Subscription };
 }
 
 const globalModel: IndexModelType = {
   namespace: 'global',
   state: {
+    plans: [],
+    knowledges: [],
+    notes: [],
     userInfo: db.get<IUserInfo>('user').value || {},
   },
   reducers: {
-    saveUserInfo(state,{payload}){
-      db.set("user", payload);
-      return {
-        ...state?.userInfo,
-        userInfo: payload
-      }
-    }
+    saveForm(state, { payload }) {},
+    saveUserInfo(state, { payload }) {
+      db.set('user', payload);
+      state.userInfo = payload;
+    },
+  },
+  effects: {},
+  subscriptions: {
+    setup({ dispatch, history }) {
+      return history.listen(({ pathname }) => {
+        // console.log(`=>`, pathname);
+      });
+    },
   },
 };
 
