@@ -31,12 +31,13 @@ class BaseLocalStorage {
     let status = STORE_STATUS.SUCCESS;
     value = JSON.stringify(value);
     key = this.getKey(key);
-    // 失效时间默认一个月
+    
     try {
       time =
         new Date(time as number | string).getTime() || (time as Date).getTime();
     } catch (e) {
-      time = new Date().getTime() + 1000 * 60 * 60 * 24 * 31;
+      // todo 默认一个月，这个应用就不设置过期时间了
+      time = new Date().getTime() + 1000 * 60 * 60 * 24 * 31 * 99999;
     }
 
     try {
@@ -51,7 +52,6 @@ class BaseLocalStorage {
   get<T>(key: string, cb?: GET_CALLBACK): getResult<T> {
     let status = STORE_STATUS.SUCCESS;
     let value = null as any;
-    let timeSignLen = this.timeSign.length;
     key = this.getKey(key);
 
     let result = {} as getResult<T>;

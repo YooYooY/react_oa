@@ -1,5 +1,5 @@
 import { memo, useState, FC, useCallback, EventHandler } from 'react';
-import { IFormProps, IUserInfo, PageType } from '@/typing';
+import { IFormProps, IUserInfo, PageType, IType } from '@/typing';
 import { Link } from 'umi';
 import { Input, Badge, Modal, Form, Radio, Select, DatePicker } from 'antd';
 import moment from 'moment';
@@ -16,9 +16,9 @@ interface IProp {
 }
 
 const options = [
-  { label: '计划', value: 0 },
-  { label: '知识', value: 1 },
-  { label: '便签', value: 2 },
+  { label: '计划', value: IType.plan },
+  { label: '知识', value: IType.knowledge },
+  { label: '便签', value: IType.note },
 ];
 
 const weightOptions = [
@@ -30,9 +30,9 @@ const weightOptions = [
 
 
 const HeaderComponent: FC<IProp> = (props) => {
-  const [formType, setFormType] = useState(0);
+  const [formType, setFormType] = useState(IType.plan);
   const { onFormSubmit, userInfo, pageType } = props;
-  const [isModalVisible, setIsModalVisible] = useState(true);
+  const [isModalVisible, setIsModalVisible] = useState(false);
   const [form] = Form.useForm<IFormProps>();
 
   const showEditModal = useCallback(() => setIsModalVisible(true), []);
@@ -41,15 +41,15 @@ const HeaderComponent: FC<IProp> = (props) => {
   const handleOk = async () => {
     const values = await form.validateFields();
     const dateFormat = 'YYYY-MM-DD';
-    if (formType === 0) {
+    if (formType === IType.plan) {
       values.startTime = moment(values.startTime).format(dateFormat);
       values.endTime = moment(values.endTime).format(dateFormat);
       values.status = 'undone';
     }
     values.createTime = moment(new Date()).format(dateFormat);
     console.log(`values`, values)
-    // onFormSubmit && onFormSubmit(values);
-    // setIsModalVisible(false);
+    onFormSubmit && onFormSubmit(values);
+    setIsModalVisible(false);
   };
 
   const onChange: EventHandler<any> = (e) => {
@@ -113,7 +113,7 @@ const HeaderComponent: FC<IProp> = (props) => {
           name="addTask"
           size="large"
           form={form}
-          initialValues={{ type: 0 }}
+          initialValues={{ type: IType.plan }}
         >
           <Form.Item
             name="type"
@@ -128,7 +128,7 @@ const HeaderComponent: FC<IProp> = (props) => {
             />
           </Form.Item>
 
-          {formType !== 2 && (
+          {formType !== IType.note && (
             <Form.Item
               name="title"
               label="标题"
@@ -144,7 +144,7 @@ const HeaderComponent: FC<IProp> = (props) => {
           >
             <RichText />
           </Form.Item>
-          {formType === 0 && (
+          {formType === IType.plan && (
             <>
               <Form.Item
                 name="weight"

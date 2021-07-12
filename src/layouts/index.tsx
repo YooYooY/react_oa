@@ -37,7 +37,9 @@ const Layout: ConnectRC<{ userInfo: IUserInfo }> = (props) => {
           pageType={pageType}
         />
         <main>{children}</main>
-        <footer>chenvl</footer>
+        <footer>
+          create by <a href="https://youyoucuocuo.top/post/about" target="_blank">chenvl</a>
+        </footer>
       </div>
     </ConfigProvider>
   );
