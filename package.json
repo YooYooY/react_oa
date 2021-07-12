@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@ant-design/pro-layout": "^6.5.0",
+    "@antv/f2": "^3.8.9",
     "@umijs/preset-react": "1.x",
     "braft-editor": "^2.3.9",
     "umi": "^3.4.25"

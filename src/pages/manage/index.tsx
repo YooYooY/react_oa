@@ -4,6 +4,10 @@ import { useMemo, useCallback } from 'react';
 import classnames from 'classnames';
 import moment, { Moment } from 'moment';
 import { Calendar, Badge } from 'antd';
+import { knowledgesMock, notesMock, plansMock } from './data';
+import Chart from '@/components/VisualComponents/Chart';
+import Line from '@/components/VisualComponents/Line';
+import Pie from '@/components/VisualComponents/Pie';
 import "./index.less"
 
 const ManagePage: ConnectRC<IState> = (props) => {
@@ -93,7 +97,7 @@ const ManagePage: ConnectRC<IState> = (props) => {
 
   return (
     <div className="manage-page">
-      <div className="header-tip">
+      <div className="header-title">
         <h3>欢迎使用成长助手！</h3>
         <p>轻松智能的管理你的所见·所思·所写</p>
       </div>
@@ -105,11 +109,31 @@ const ManagePage: ConnectRC<IState> = (props) => {
           </div>
         ))}
       </div>
-      <div className="header-tip">
+      <div className="header-title">
         <h3>个人纬度分析</h3>
         <p>你的个人分析助手</p>
       </div>
-      <div className="header-tip">
+      <div className="data-graph">
+        <div className="data-row">
+          <div className="title">每周新学习知识分析</div>
+          <div className="graph">
+            <Chart data={knowledgesMock}></Chart>
+          </div>
+        </div>
+        <div className="data-row">
+          <div className="title">便签每日趋势分析</div>
+          <div className="graph">
+            <Line data={notesMock}></Line>
+          </div>
+        </div>
+        <div className="data-row">
+          <div className="title">计划指标</div>
+          <div className="graph">
+            <Pie data={plansMock} />
+          </div>
+        </div>
+      </div>
+      <div className="header-title">
         <h3>计划日历</h3>
         <p>不让你错过每个重要的事件~</p>
       </div>
