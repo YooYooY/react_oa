@@ -10,7 +10,7 @@ interface IProps {
   knowledges: Array<IFormProps>;
 }
 
-const PlanPage: ConnectRC<IProps> = (props) => {
+const KnowledgePage: ConnectRC<IProps> = (props) => {
   const { knowledges, dispatch } = props;
   const onSearch = (keyword: string)=>{
       dispatch({
@@ -62,4 +62,4 @@ const PlanPage: ConnectRC<IProps> = (props) => {
   );
 };
 
-export default connect((state: { global: IState }) => state.global)(PlanPage);
+export default connect((state: { global: IState }) => state.global)(KnowledgePage);
