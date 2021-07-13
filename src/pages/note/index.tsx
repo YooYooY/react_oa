@@ -4,6 +4,7 @@ import { IFormProps, IState } from '@/typing';
 import { Popconfirm } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
 import './index.less';
+import Empty from '@/components/Empty';
 
 interface IProps {
   notes: Array<IFormProps>;
@@ -11,6 +12,8 @@ interface IProps {
 
 const NotePage: ConnectRC<IProps> = (props) => {
   const { notes, dispatch } = props;
+  
+  if (!notes || !notes.length) return <Empty />;
 
   const handleDel = (row: { key: string; type: number }) => {
     dispatch({

@@ -11,6 +11,7 @@ import {
 } from '@ant-design/icons';
 import { Radio, Tooltip, Popconfirm, message } from 'antd';
 import "./index.less";
+import Empty from '@/components/Empty';
 
 interface IProps {
   plans: Array<IFormProps>;
@@ -26,6 +27,9 @@ const options = [
 
 const PlanPage: ConnectRC<IProps> = (props) => {
   const { plans, dispatch } = props;
+  
+    if (!plans || !plans.length) return <Empty />;
+  
   const mixer = useRef<Mixitup>();
   const onFilterChange = (e: any) => {
     mixer.current?.filter(`.${e.target.value}`);

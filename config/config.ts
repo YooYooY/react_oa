@@ -10,5 +10,8 @@ export default defineConfig({
     immer: true,
   },
   routes,
+  history: {
+    type: 'hash',
+  },
   fastRefresh: {},
 });

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { IFormProps, IState } from '@/typing';
 import { Input, Popconfirm } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';import './index.less';
+import Empty from "@/components/Empty"
 
 const { Search } = Input;
 
@@ -12,6 +13,9 @@ interface IProps {
 
 const KnowledgePage: ConnectRC<IProps> = (props) => {
   const { knowledges, dispatch } = props;
+  
+  if(!knowledges || !knowledges.length) return <Empty />;
+  
   const onSearch = (keyword: string)=>{
       dispatch({
           type: "global/searchItem",
