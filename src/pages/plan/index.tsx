@@ -42,19 +42,19 @@ const PlanPage: ConnectRC<IProps> = (props) => {
     });
   }, []);
 
-  const handleEdit = async (key: string, status: string) => {
-    await dispatch({
+  const handleEdit = (key: string, status: string) => {
+    dispatch({
       type: 'global/editItem',
       payload: { key, status },
     });
-    message.success("更新成功！")
   };
 
-  const handleDel = (row: { key: string; type: number }) => {
-    dispatch({
+  const handleDel = async (row: { key: string; type: number }) => {
+    await dispatch({
       type: 'global/delItem',
       payload: row,
     });
+    message.success('更新成功！');
   };
   
   return (
