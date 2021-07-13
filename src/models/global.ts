@@ -42,23 +42,26 @@ const globalModel: IndexModelType = {
       }
     },
     delItem(state, { payload }) {
-      if (payload.type === IType.plan) {
+      if (payload.type === IType.note) {
         const newData = db
-          .get<IFormProps[]>('palns')
+          .get<IFormProps[]>('notes')
           .value!.filter((item) => item.key !== payload.key);
-        state.plans = newData;
+        state.notes = newData;
+        db.set('notes', newData);
       }
       if (payload.type === IType.knowledge) {
         const newData = db
           .get<IFormProps[]>('knowledges')
           .value!.filter((item) => item.key !== payload.key);
         state.knowledges = newData;
+        db.set('knowledges', newData);
       }
       if (payload.type === IType.plan) {
         const newData = db
-          .get<IFormProps[]>('palns')
+          .get<IFormProps[]>('plans')
           .value!.filter((item) => item.key !== payload.key);
         state.plans = newData;
+        db.set('plans', newData);
       }
     },
     editItem(state, { payload }) {
@@ -93,11 +96,11 @@ const globalModel: IndexModelType = {
         );
       }
     },
-    clearAll(state){
+    clearAll(state) {
       state.plans = [];
       state.knowledges = [];
       state.notes = [];
-    }
+    },
   },
   effects: {},
   subscriptions: {

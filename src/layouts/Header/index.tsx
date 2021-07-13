@@ -47,7 +47,6 @@ const HeaderComponent: FC<IProp> = (props) => {
       values.status = 'undone';
     }
     values.createTime = moment(new Date()).format(dateFormat);
-    console.log(`values`, values)
     onFormSubmit && onFormSubmit(values);
     setIsModalVisible(false);
   };
@@ -68,7 +67,7 @@ const HeaderComponent: FC<IProp> = (props) => {
           <Link to="/">数据大盘</Link>
         </div>
         <div
-          className={classnames('nav-link', pageType === 'manage' && 'plan')}
+          className={classnames('nav-link', pageType === 'plan' && 'active')}
         >
           <Link to="/plan">计划管理</Link>
         </div>
